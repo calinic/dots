@@ -1,0 +1,370 @@
+; ======
+; Colors
+; ======
+[colors]
+background = #AA2E3440
+foreground = #D8DEE9
+black      = #4C566A
+red        = #BF616A
+green      = #A3BE8C
+yellow     = #EBCB8B
+blue       = #5E81AC
+magenta    = #B48EAD
+cyan       = #8FBCBB
+white      = #D8DEE9
+orange     = #D08770
+
+; =======
+; Top Bar
+; =======
+[bar/DP-2]
+monitor = DP-2
+wm-restack = bspwm
+
+; Size
+width  = 100%
+height = 25
+
+; Offset
+;offset-x = 50%
+;offset-y = 50%
+
+; Position
+bottom = false
+
+; Radius
+radius = 0
+
+; Align modules fixed to middle
+fixed-center = true
+
+; Colors
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+; Underline
+line-size  = 4
+line-color = ${colors.white}
+
+; Border
+border-size  = 0
+
+; Padding
+padding-left  = 0
+padding-right = 0
+
+; Margin of modules
+module-margin-left  = 0
+module-margin-right = 0
+
+; Font
+font-0 = SF Pro Dispaly:size=10;
+#font-0 = Consolas:size=10;3
+
+; Modlues
+modules-left   = bspwm
+modules-center = time date
+modules-right  = audio network lock reboot poweroff
+
+; Cursor actions
+cursor-click  = pointer
+cursor-scroll = ns-resize
+
+; Separator
+separator = " "
+
+[bar/HDMI-0]
+monitor = HDMI-0
+wm-restack = bspwm
+
+; Size
+width  = 100%
+height = 25
+
+; Offset
+;offset-x = 50%
+;offset-y = 50%
+
+; Position
+bottom = false
+
+; Radius
+radius = 0
+
+; Align modules fixed to middle
+fixed-center = true
+
+; Colors
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+; Underline
+line-size  = 4
+line-color = ${colors.white}
+
+; Border
+border-size  = 0
+
+; Padding
+padding-left  = 0
+padding-right = 0
+
+; Margin of modules
+module-margin-left  = 0
+module-margin-right = 0
+
+; Font
+;font-0 = NotoSans:size=10;4
+font-0 = SF Pro Display:size=10;
+;font-0 = Consolas:size=10;3
+font-1 = Noto Sans Symbols2:size=10;4 
+font-2 = FreeSans:size=10;4
+
+; Modlues
+modules-left   = bspwm
+modules-center = time player-mpris-tail
+modules-right  = cpu cpu-temperature nvidia-gpu nvidia-gpu-temp memory3
+
+; Cursor actions
+cursor-click  = pointer
+cursor-scroll = ns-resize
+
+; Separator
+separator = " "
+
+[module/memory3]
+type = internal/memory
+interval = 2;
+label = %gb_used%/%gb_free%
+format = Mem <label>
+format-prefix = 
+foramt-prefix-foreground = #3384d0
+format-underline = #00a3cc
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/nvidia-gpu]
+type = custom/script
+exec =  ~/.config/polybar/scripts/nvidia-script.sh
+interval = 2
+format-underline = #fb5665
+
+[module/nvidia-gpu-temp]
+type = custom/script
+exec = ~/.config/polybar/scripts/nvidia-temp-script.sh 
+interval = 2
+format-underline = #ffb366
+units = true
+
+[module/cpu]
+type = internal/cpu
+; Seconds to sleep between updates
+interval = 2
+format = <label>
+format-underline = #9999ff
+label = CPU %percentage%%
+ramp-coreload-0 = 
+ramp-coreload-1 = 
+ramp-coreload-2 = 
+ramp-coreload-3 = 
+ramp-coreload-4 = 
+ramp-coreload-5 = 
+ramp-coreload-6 =
+ramp-coreload-7 = 
+
+[module/player-mpris-tail]
+type = custom/script
+exec = ~/.config/polybar/scripts/player-mpris-tail.py -f '{:artist:t18:{artist}:}{:artist: - :}{:t20:{title}:}  %{A1:~/.config/polybar/scripts/player-mpris-tail.py previous:} ⏮ %{A} %{A1:~/.config/polybar/scripts/player-mpris-tail.py play-pause:} {icon-reversed} %{A} %{A1:~/.config/polybar/scripts/player-mpris-tail.py next:} ⏭ %{A}'
+tail = true
+
+[module/cpu-temperature]
+type = internal/temperature
+interval = 0.5
+thermal-zone = 2
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+base-temperature = 0
+warn-temperature = 80
+units = true
+format-underline = #4ae3b2 
+
+; ============
+; bspwm Module
+; ============
+[module/bspwm]
+type = internal/bspwm
+
+; Mouse click
+enable-click = true
+
+; Mouse scroll
+enable-scroll  = false
+reverse-scroll = false
+
+; Separator
+label-separator = " "
+
+; Dimmed label
+label-dimmed         = %name%
+label-dimmed-padding = 1
+
+; Focused label
+label-focused            = %name%
+label-focused-foreground = ${colors.black}
+label-focused-background = ${colors.blue}
+label-focused-padding    = 1
+
+; Occupied label
+label-occupied            = %name%
+label-occupied-foreground = ${colors.black}
+label-occupied-background = #88B5DE
+label-occupied-underline  = ${colors.blue}
+label-occupied-padding    = 1
+
+; Empty labels
+label-empty            = %name%
+label-empty-foreground = ${colors.black}
+label-empty-background = #88B5DE
+label-empty-padding    = 1
+
+; Urgent labels
+label-urgent            = %name%
+label-urgent-foreground = ${colors.black}
+label-urgent-background = ${colors.red}
+label-urgent-padding    = 1
+
+; ===========
+; Time Module
+; ===========
+[module/time]
+type = internal/date
+
+; Update interval
+interval = 1.0
+
+; Format
+time = %I:%M%P
+
+; Label
+label            = %time%
+label-foreground = ${colors.black}
+label-background = #88B5DE
+label-padding    = 1
+
+; ===========
+; Date Module
+; ===========
+[module/date]
+type = internal/date
+
+; Update interval
+interval = 1.0
+
+; Format
+date = %A, %d %B
+
+; Label
+label            = %date%
+label-foreground = ${colors.black}
+label-background = #88B5DE
+label-padding    = 1
+
+; ============
+; Audio Module
+; ============
+[module/audio]
+type = internal/pulseaudio
+
+; Volume label
+label-volume            = Volume: %percentage%%
+label-volume-foreground = ${colors.black}
+label-volume-background = #88B5DE
+label-volume-padding    = 1
+
+; Muted label
+label-muted            = Muted
+label-muted-foreground = ${colors.black}
+label-muted-background = ${colors.red}
+label-muted-padding    = 1
+
+; ==============
+; Network Module
+; ==============
+[module/network]
+type = internal/network
+
+; Interface
+interface = enp4s0
+
+; Connected label
+label-connected            = Download: %downspeed%
+label-connected-foreground = ${colors.black}
+label-connected-background = #88B5DE
+label-connected-padding    = 1
+
+; Disconnected label
+label-disconnected            = Disconnected
+label-disconnected-foreground = ${colors.black}
+label-disconnected-background = ${colors.red}
+label-disconnected-padding    = 1
+
+; ===========
+; Lock Module
+; ===========
+[module/lock]
+type = custom/text
+
+; Label
+content            = Lock
+content-foreground = ${colors.black}
+content-background = ${colors.blue}
+content-padding    = 1
+
+; Mouse click
+click-left = multilockscreen --lock blur
+
+; =============
+; Reboot Module
+; =============
+[module/reboot]
+type = custom/text
+
+; Label
+content            = Reboot
+content-foreground = ${colors.black}
+content-background = ${colors.blue}
+content-padding    = 1
+
+; Mouse click
+click-left = reboot
+
+; ===============
+; Poweroff Module
+; ===============
+[module/poweroff]
+type = custom/text
+
+; Label
+content            = Poweroff
+content-foreground = ${colors.black}
+content-background = ${colors.blue}
+content-padding    = 1
+
+; Mouse click
+click-left = poweroff
+
+; =====
+; Other
+; =====
+[settings]
+screenchange-reload     = true
+;compositing-background = xor
+;compositing-foreground = source
+;compositing-border     = over
+pseudo-transparency     = true
+
+; ==
+; WM
+; ==
+[global/wm]
+margin-top    = 0
+margin-bottom = 0
